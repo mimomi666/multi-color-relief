@@ -1,0 +1,5 @@
+{
+  "name": "HueForge Web: Color Relief 3D Models",
+  "description": "An online tool inspired by HueForge to convert images into 3D printable color reliefs. Upload an image, select the number of colors, adjust layer heights, and generate an STL file for 3D printing.",
+  "requestFramePermissions": []
+}
