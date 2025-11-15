@@ -846,7 +846,7 @@ export default function App() {
                 <Star size={16} className="group-hover:fill-yellow-400 group-hover:text-yellow-400 transition-colors" />
                 <span className="text-sm font-medium">Star</span>
             </a>
-            <h1 className="text-4xl md:text-5xl font-bold text-white">HueForge Web</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-white">MultiColor Relief</h1>
             <p className="text-indigo-400 mt-2">3D打印颜色浮雕生成器</p>
         </header>
 
