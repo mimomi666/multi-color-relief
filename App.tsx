@@ -3,7 +3,7 @@ import { RGBColor, Layer, Settings, ProcessedData, GeometryData } from './types'
 import { Canvas, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { OrbitControls, Stage } from '@react-three/drei';
-import { Upload, Download, Cog, Loader, Palette, Ruler, ArrowUp, ArrowDown } from 'lucide-react';
+import { Upload, Download, Cog, Loader, Palette, Ruler, ArrowUp, ArrowDown, Github, Star } from 'lucide-react';
 
 // --- HELPER FUNCTIONS ---
 
@@ -371,7 +371,7 @@ const processImage = (imageSrc: string, settings: Settings): Promise<ProcessedDa
           id: centroids.length - 1 - i, // 保持原始ID对应关系
           color: c,
           hex: rgbToHex(c[0], c[1], c[2]),
-          height: cumulativeHeight,
+          height: parseFloat(cumulativeHeight.toFixed(2)), // 保留2位小数
         };
       });
 
@@ -634,7 +634,7 @@ export default function App() {
       }
       return {
         ...layer,
-        height: cumulativeHeight
+        height: parseFloat(cumulativeHeight.toFixed(2)) // 保留2位小数
       };
     });
   };
@@ -834,7 +834,18 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200 font-sans p-4 md:p-8">
-        <header className="text-center mb-8">
+        <header className="text-center mb-8 relative">
+            <a 
+                href="https://github.com/mimomi666/multi-color-relief" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="absolute top-0 right-0 flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors group"
+                title="Star on GitHub"
+            >
+                <Github size={20} className="group-hover:scale-110 transition-transform" />
+                <Star size={16} className="group-hover:fill-yellow-400 group-hover:text-yellow-400 transition-colors" />
+                <span className="text-sm font-medium">Star</span>
+            </a>
             <h1 className="text-4xl md:text-5xl font-bold text-white">HueForge Web</h1>
             <p className="text-indigo-400 mt-2">3D打印颜色浮雕生成器</p>
         </header>
@@ -980,9 +991,9 @@ export default function App() {
                                    <span className="text-sm font-mono flex-1 min-w-0">{layer.hex}</span>
                                    <input 
                                        type="number" 
-                                       value={layer.height} 
+                                       value={layer.height.toFixed(2)} 
                                        onChange={e => updateLayerHeight(layer.id, parseFloat(e.target.value))} 
-                                       step="0.1" 
+                                       step="0.01" 
                                        className="w-16 bg-gray-700 border border-gray-600 rounded-md px-2 py-1 text-right text-sm"
                                    />
                                    <span className="text-xs text-gray-400 w-8">mm</span>
