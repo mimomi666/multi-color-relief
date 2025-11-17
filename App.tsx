@@ -353,22 +353,19 @@ const processImage = (imageSrc: string, settings: Settings): Promise<ProcessedDa
         }
       }
 
-      // 反转顺序，使背景颜色作为第一层，然后重新分配高度
-      const reversedCentroids = [...centroids].reverse();
-      
-      // 第一层0.8mm，其余层每层0.4mm
-      const firstLayerThickness = 0.8;
-      const normalLayerThickness = 0.4;
+      // 第一层0.64mm，其余层每层增加0.16mm
+      const firstLayerThickness = 0.64;
+      const normalLayerThickness = 0.16;
       let cumulativeHeight = 0;
       
-      const initialLayers: Layer[] = reversedCentroids.map((c, i) => {
+      const initialLayers: Layer[] = centroids.map((c, i) => {
         if (i === 0) {
           cumulativeHeight = firstLayerThickness;
         } else {
           cumulativeHeight += normalLayerThickness;
         }
         return {
-          id: centroids.length - 1 - i, // 保持原始ID对应关系
+          id: i,
           color: c,
           hex: rgbToHex(c[0], c[1], c[2]),
           height: parseFloat(cumulativeHeight.toFixed(2)), // 保留2位小数
@@ -622,8 +619,8 @@ export default function App() {
 
   // 重新计算图层的累积高度（打印顺序从下到上）
   const recalculateLayerHeights = (layersArray: Layer[]): Layer[] => {
-    const firstLayerThickness = 0.8; // 第一层（背景）厚度为0.8mm
-    const normalLayerThickness = 0.4; // 其余层厚度为0.4mm
+    const firstLayerThickness = 0.64; // 第一层厚度为0.64mm
+    const normalLayerThickness = 0.16; // 其余层厚度每层增加0.16mm
     
     let cumulativeHeight = 0;
     return layersArray.map((layer, index) => {
